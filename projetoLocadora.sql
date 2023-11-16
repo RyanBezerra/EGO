@@ -4,8 +4,10 @@
 -- ------------------------------------------------------
 -- Server version	5.7.21-log
 
-CREATE DATABASE IF NOT EXISTS locadora;
-USE locadora;
+CREATE DATABASE LocadoraB;
+USE LocadoraB;
+
+SET SQL_SAFE_UPDATES = 0;
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -18,26 +20,6 @@ USE locadora;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
-SET SQL_SAFE_UPDATES = 0;
-
-/* Fazer uma script SQL para criar uma tabela DEPENDENTE, com os campos ID, NOME DO DEPENDENTE,
-   CODCLIENTE. Depois essa tabela precisa está relacionada a tabela CLIENTE, 
-   onde o CODIGO do cliente se relacionará com a coluna CODCLIENTE fazendo papel de chave estrangeira na tabela DEPENDENTE */
-   
-   CREATE TABLE DEPENDENTE(
-   id int(11) NOT NULL AUTO_INCREMENT,
-   nome_do_dependente varchar(60) DEFAULT NULL,
-   codCliente int NOT NULL,
-   PRIMARY KEY (id),
-   FOREIGN KEY (codCliente) REFERENCES `cliente` (`codigo`)
-   );
-   
-	DELIMITER $$
-	CREATE PROCEDURE p_insert_dado_dependete(IN p_id int(11), IN p_nome_dependete varchar(60), IN p_cod int)
-	BEGIN
-	INSERT INTO DEPENDENTE (id, nome_do_dependente, codCliente) VALUES (p_id, p_nome_dependete, p_cod);
-
-	END $$
 --
 -- Table structure for table `cidade`
 --
@@ -211,11 +193,26 @@ CREATE TABLE `veiculo` (
 ) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Dumping data for table `veiculo`
+--
+
 LOCK TABLES `veiculo` WRITE;
 /*!40000 ALTER TABLE `veiculo` DISABLE KEYS */;
 INSERT INTO `veiculo` VALUES (1,'MNH0002','HB20S',4,'S','2019-04-30',4,'HYUNDAI',2017,120.50),(2,'KMN8872','Corolla',4,'S','2019-08-20',4,'TOYOTA',2018,140.00),(3,'QFC2010','Gol',2,'N','2019-10-03',3,'VOLKSWAGEN',2014,70.00),(4,'MAB0002','Honda Civic',4,'S','2019-10-05',2,'HONDA',2015,130.50),(5,'KKJ8888','Touro',4,'S','2019-01-31',2,'FIAT',2015,100.00),(6,'JNH1022','Kicks',4,'S','2018-12-31',1,'NISSAN',2018,105.00),(7,'KKK0002','HB20S',4,'S','2019-04-30',4,'HYNUDAI',2018,125.00),(8,'KFJ8223','Corolla',4,'S','2019-08-20',4,'TOYOTA',2015,100.00),(9,'QFT0202','Uno',2,'N','2019-10-03',3,'FIAT',2015,65.00),(10,'MMM0211','HB20',4,'S','2019-10-05',1,'HYUNDAI',2017,120.00),(11,'KDJ9999','Uno',2,'F','2019-01-31',2,'FIAT',2017,90.99),(12,'JNL0558','March',2,'S','2018-12-31',1,'NISSAN',2015,80.99);
 /*!40000 ALTER TABLE `veiculo` ENABLE KEYS */;
 UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2018-11-26 17:06:05
 
 SELECT
     v.placa,
@@ -306,8 +303,6 @@ BEGIN
         ano = p_ano;
 END $$
 
-DELIMITER ;
-    
 SELECT
     cl.nome AS NOME,
     cl.CPF AS CPF,
@@ -327,22 +322,3 @@ FROM
 WHERE
     vei.ano BETWEEN 2015 AND 2020
     AND con.multa >= 250.00;
-
-
-
-
---
--- Dumping data for table `veiculo`
---
-
-/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
-
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
-
--- Dump completed on 2018-11-26 17:06:05
