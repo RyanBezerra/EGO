@@ -290,6 +290,44 @@ WHERE
         FROM
             veiculo
     );
+    DELIMITER $$
+
+CREATE PROCEDURE ConsultarVeiculosPorAno(
+    IN p_ano INT
+)
+BEGIN
+    SELECT
+        placa,
+        modelo,
+        marca
+    FROM
+        veiculo
+    WHERE
+        ano = p_ano;
+END $$
+
+DELIMITER ;
+    
+SELECT
+    cl.nome AS NOME,
+    cl.CPF AS CPF,
+    con.valorReserva AS VALORDARESERVA,
+    vei.modelo AS MODELO,
+    vei.marca AS MARCA,
+    vei.ano AS ANO,
+    fil.rua AS RUA,
+    fil.bairro AS BAIRRO,
+    fil.CEP AS CEP,
+    con.multa AS MULTA
+FROM
+    contrato con
+    JOIN veiculo vei ON con.idVeiculo = vei.id
+    JOIN cliente cl ON con.codigoCliente = cl.codigo
+    JOIN filial fil ON vei.codFilial = fil.codigo
+WHERE
+    vei.ano BETWEEN 2015 AND 2020
+    AND con.multa >= 250.00;
+
 
 
 
